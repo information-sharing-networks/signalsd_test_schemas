@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/information-sharing-networks/signalsd/v1.0.0/testdata/schemas/vehicle-arrival.json",
+  "title": "Vehicle Arrival Signal",
+  "description": "Signal indicating a vehicle has arrived at a specific location",
+  "type": "object",
+  "properties": {
+    "VRN": {
+      "type": "string",
+      "description": "Vehicle Registration Number",
+      "pattern": "^[A-Z]{2}[0-9]{2}\\s[A-Z]{3}$",
+      "examples": ["YS18 KLI", "AB12 CDE"]
+    },
+    "location": {
+      "type": "string",
+      "description": "Location identifier where the vehicle arrived",
+      "pattern": "^[a-z0-9_]+$",
+      "examples": ["warehouse_1_area_1", "loading_dock_2", "parking_zone_a"]
+    },
+    "arrival_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the vehicle arrived",
+      "examples": ["2025-06-12T14:20:46Z", "2025-06-12T14:20:46.123Z"]
+    }
+  },
+  "required": ["VRN", "location", "arrival_time"],
+  "additionalProperties": false
+}
