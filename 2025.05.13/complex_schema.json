@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/information-sharing-networks/signalsd/blob/2025.01.15/test/performance/complex_schema.json",
   "title": "Complex Performance Test Signal",
-  "description": "A complex schema with 30 fields for performance testing",
+  "description": "A comprehensive schema with 30+ fields for realistic performance testing",
   "type": "object",
   "required": [
     "signal_id",
@@ -82,11 +82,8 @@
     },
     "ip_address": {
       "type": "string",
-      "oneOf": [
-        {"format": "ipv4"},
-        {"format": "ipv6"}
-      ],
-      "description": "IP address of the client"
+      "format": "ipv4",
+      "description": "IPv4 address of the client"
     },
     "user_agent": {
       "type": "string",
