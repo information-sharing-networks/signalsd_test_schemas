@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/information-sharing-networks/signalsd/blob/2025.01.15/test/performance/complex_schema.json",
+  "title": "Complex Performance Test Signal",
+  "description": "A complex schema with 30 fields for performance testing",
+  "type": "object",
+  "required": [
+    "signal_id",
+    "timestamp",
+    "event_type",
+    "severity",
+    "source_system",
+    "location",
+    "user_id",
+    "session_id",
+    "ip_address",
+    "user_agent"
+  ],
+  "properties": {
+    "signal_id": {
+      "type": "string",
+      "pattern": "^SIG-[0-9]{8}-[A-Z0-9]{6}$",
+      "description": "Unique signal identifier"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the signal was generated"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": ["login", "logout", "data_access", "file_upload", "file_download", "api_call", "error", "warning", "info"],
+      "description": "Type of event that triggered this signal"
+    },
+    "severity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Severity level from 1 (low) to 10 (critical)"
+    },
+    "source_system": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "System that generated the signal"
+    },
+    "location": {
+      "type": "object",
+      "required": ["country", "city"],
+      "properties": {
+        "country": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2 country code"
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        }
+      }
+    },
+    "user_id": {
+      "type": "string",
+      "pattern": "^user_[a-z0-9]{8}$",
+      "description": "Unique user identifier"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^sess_[a-f0-9]{32}$",
+      "description": "User session identifier"
+    },
+    "ip_address": {
+      "type": "string",
+      "oneOf": [
+        {"format": "ipv4"},
+        {"format": "ipv6"}
+      ],
+      "description": "IP address of the client"
+    },
+    "user_agent": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Browser user agent string"
+    },
+    "request_method": {
+      "type": "string",
+      "enum": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
+      "description": "HTTP request method"
+    },
+    "request_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Full request URL"
+    },
+    "response_code": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 599,
+      "description": "HTTP response status code"
+    },
+    "response_time_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Response time in milliseconds"
+    },
+    "bytes_transferred": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of bytes transferred"
+    },
+    "error_message": {
+      "type": ["string", "null"],
+      "maxLength": 1000,
+      "description": "Error message if applicable"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_-]+$"
+      },
+      "maxItems": 20,
+      "uniqueItems": true,
+      "description": "Array of tags for categorization"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean"]
+      },
+      "description": "Additional metadata as key-value pairs"
+    },
+    "risk_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Calculated risk score"
+    },
+    "is_suspicious": {
+      "type": "boolean",
+      "description": "Whether this event is flagged as suspicious"
+    },
+    "correlation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      },
+      "maxItems": 10,
+      "uniqueItems": true,
+      "description": "Array of correlation IDs linking related events"
+    },
+    "device_info": {
+      "type": "object",
+      "properties": {
+        "device_type": {
+          "type": "string",
+          "enum": ["desktop", "mobile", "tablet", "server", "iot"]
+        },
+        "os": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "browser": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "screen_resolution": {
+          "type": "string",
+          "pattern": "^[0-9]+x[0-9]+$"
+        }
+      }
+    },
+    "network_info": {
+      "type": "object",
+      "properties": {
+        "isp": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "asn": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "connection_type": {
+          "type": "string",
+          "enum": ["broadband", "mobile", "satellite", "dial-up", "unknown"]
+        }
+      }
+    },
+    "performance_metrics": {
+      "type": "object",
+      "properties": {
+        "cpu_usage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "memory_usage": {
+          "type": "number",
+          "minimum": 0
+        },
+        "disk_usage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "business_context": {
+      "type": "object",
+      "properties": {
+        "department": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "project_id": {
+          "type": "string",
+          "pattern": "^PROJ-[0-9]{6}$"
+        },
+        "cost_center": {
+          "type": "string",
+          "pattern": "^CC-[0-9]{4}$"
+        }
+      }
+    },
+    "compliance_flags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["gdpr", "hipaa", "sox", "pci_dss", "iso27001"]
+      },
+      "uniqueItems": true,
+      "description": "Compliance frameworks that apply to this signal"
+    },
+    "data_classification": {
+      "type": "string",
+      "enum": ["public", "internal", "confidential", "restricted"],
+      "description": "Data classification level"
+    },
+    "retention_period_days": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3650,
+      "description": "Number of days to retain this signal"
+    },
+    "created_by": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+      "description": "Email of the user who created this signal"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Schema version in semantic versioning format"
+    }
+  },
+  "additionalProperties": false
+}
