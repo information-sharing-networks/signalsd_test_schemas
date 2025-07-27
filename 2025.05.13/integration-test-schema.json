@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/information-sharing-networks/signalsd/v1.0.0/testdata/schemas/integration-test-schema.json",
+  "title": "Integration Test Schema",
+  "description": "Integration Test Schema",
+  "type": "object",
+  "properties": {
+    "test": {
+      "type": "string"
+    }
+  },
+  "required": ["test"],
+  "additionalProperties": false
+}
