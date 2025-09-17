@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "name",
+    "start",
+    "summary",
+    "category",
+    "payload"
+  ],
+  "properties": {
+    "h": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "start": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "category": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "cnCodes",
+        "commodityDescription",
+        "countryOfOrigin",
+        "exporterEORI",
+        "importerEORI",
+        "location",
+        "mode",
+        "unitIdentification"
+      ],
+      "properties": {
+        "chedNumbers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "cnCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "commodityDescription": {
+          "type": "string"
+        },
+        "countryOfOrigin": {
+          "type": "string"
+        },
+        "exporterEORI": {
+          "type": "string"
+        },
+        "importerEORI": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "unitIdentification": {
+          "type": "object",
+          "required": [],
+          "properties": {
+            "meansOfTransport": {
+              "type": "object",
+              "properties": {
+                "type ": {
+                  "type": "string",
+                  "description": "Mode of transport type"
+                },
+                "id ": {
+                  "type": "string",
+                  "description": "e.g. vehicle registration number "
+                }
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "sealNumbers": {
+          "type": "array",
+          "description": "seal numbers affixed to means of transport",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
