@@ -75,7 +75,7 @@
         },
         "unitIdentification": {
           "type": "object",
-          "required": [],
+          "required": ["identityOfMeansOfTransport"],
           "properties": {
             "identityOfMeansOfTransport": {
               "type": "string",
