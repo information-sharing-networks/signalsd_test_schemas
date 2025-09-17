@@ -78,8 +78,8 @@
           "required": [],
           "properties": {
             "identityOfMeansOfTransport": {
-              "type": "array",
-              "description": "For example if means of transport is road put registration number"
+              "type": "string",
+              "description": "For example if means of transport is road put registration number "
             }
           },
           "additionalProperties": false
