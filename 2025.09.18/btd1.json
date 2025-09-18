@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "name",
+    "start",
+    "summary",
+    "category",
+    "payload"
+  ],
+  "properties": {
+    "h": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "start": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "category": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "payload": {
+      "type": "object",
+      "required": [
+        "cnCodes",
+        "commodityDescription",
+        "countryOfOrigin",
+        "exporterEORI",
+        "importerEORI",
+        "location",
+        "mode",
+        "transportMeans"
+      ],
+      "properties": {
+        "chedNumbers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "cnCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "commodityDescription": {
+          "type": "string"
+        },
+        "countryOfOrigin": {
+          "type": "string"
+        },
+        "exporterEORI": {
+          "type": "string"
+        },
+        "importerEORI": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "transportMeans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "transportMovementType": {
+                "type": "string"
+              },
+              "identifier": {
+                "type": "string",
+                "description": "e.g container number or trailer number"
+              },
+              "affixedSeal": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "transportMovementType",
+              "identifier"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
