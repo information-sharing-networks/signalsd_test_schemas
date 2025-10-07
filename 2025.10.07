@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MAWB Tracking Signal",
+  "description": "Schema for Master Air Waybill tracking signals at different stages",
+  "type": "object",
+  "required": ["tagtId", "stage", "countryOfOrigin", "portOfExit", "commodityCode", "productName", "timestamp"],
+  "properties": {
+    "tagtId": {
+      "type": "string",
+      "description": "Unique tracking identifier"
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["upload", "arrival"],
+      "description": "Stage of the tracking process: upload (MAWB upload) or arrival (arrival at apron)"
+    },
+    "countryOfOrigin": {
+      "type": "string",
+      "description": "Country where the goods originated",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "portOfExit": {
+      "type": "string",
+      "description": "Port where goods departed from"
+    },
+    "commodityCode": {
+      "type": "string",
+      "description": "HS commodity code or similar classification"
+    },
+    "productName": {
+      "type": "string",
+      "description": "Name or description of the product"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the event in ISO 8601 format"
+    },
+    "itemWeight": {
+      "type": "string",
+      "description": "Weight of the item (only for arrival stage)"
+    },
+    "locationZone": {
+      "type": "string",
+      "description": "Zone location at the apron (only for arrival stage)"
+    },
+    "documentsUploaded": {
+      "type": "array",
+      "description": "List of uploaded documents (only for arrival stage)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentType": {
+            "type": "string",
+            "description": "Type of document (e.g., invoice, certificate)"
+          },
+          "documentUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL or reference to the document"
+          },
+          "uploadedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the document was uploaded"
+          }
+        },
+        "required": ["documentType", "documentUrl"]
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "stage": {
+            "const": "arrival"
+          }
+        }
+      },
+      "then": {
+        "required": ["itemWeight", "locationZone", "documentsUploaded"]
+      }
+    }
+  ],
+  "examples": [
+    {
+      "tagtId": "MAWB-2025-001",
+      "stage": "upload",
+      "countryOfOrigin": "US",
+      "portOfExit": "JFK Airport",
+      "commodityCode": "0406.10.20",
+      "productName": "Fresh Dairy Products",
+      "timestamp": "2025-10-01T10:30:00Z"
+    },
+    {
+      "tagtId": "MAWB-2025-001",
+      "stage": "arrival",
+      "countryOfOrigin": "US",
+      "portOfExit": "JFK Airport",
+      "commodityCode": "0406.10.20",
+      "productName": "Fresh Dairy Products",
+      "itemWeight": "500kg",
+      "locationZone": "Zone A3",
+      "documentsUploaded": [
+        {
+          "documentType": "Health Certificate",
+          "documentUrl": "https://docs.example.com/cert-123",
+          "uploadedAt": "2025-10-01T14:30:00Z"
+        },
+        {
+          "documentType": "Commercial Invoice",
+          "documentUrl": "https://docs.example.com/invoice-456",
+          "uploadedAt": "2025-10-01T14:35:00Z"
+        }
+      ],
+      "timestamp": "2025-10-01T14:45:00Z"
+    }
+  ]
+}
+
